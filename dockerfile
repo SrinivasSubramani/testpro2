@@ -1,13 +1,9 @@
-#
-#Dev2 branch2 Testpro2 Dockerfile
-#
-FROM ubuntu:latest
-MAINTAINER sri"info2srinivas.in@gmail.com"
-
-RUN apt-get update
-RUN apt-get install -y python python-pip wget
-
-WORKDIR ubuntu
-RUN cd ubuntu
-
+# creates a layer from the openjdk:8-jdk-alpine Docker image
+FROM openjdk:8-jdk-alpine
+# create the directory for where Tomcat creates its working directories
+VOLUME /tmp
+# copy the project JAR file to the container renamed as 'app.jar'
+COPY build/libs /app
+# execute that JAR in the entry point below
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/java-example.jar"]
 CMD ls
